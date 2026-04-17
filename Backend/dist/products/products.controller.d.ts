@@ -1,0 +1,158 @@
+import { ProductsService } from './products.service';
+import { Prisma } from '@prisma/client';
+export declare class ProductsController {
+    private readonly productsService;
+    constructor(productsService: ProductsService);
+    findAll(category?: any, categoryId?: string, page?: string, limit?: string, all?: string): Promise<{
+        data: ({
+            categoryObj: {
+                id: string;
+                name: string;
+                createdAt: Date;
+                updatedAt: Date;
+            } | null;
+            stock: {
+                id: string;
+                productId: string;
+                quantity: Prisma.Decimal;
+                lowStockThreshold: Prisma.Decimal;
+                updatedAt: Date;
+                createdAt: Date;
+            } | null;
+        } & {
+            id: string;
+            category: import("@prisma/client").$Enums.ProductCategory;
+            name: string;
+            description: string | null;
+            basePrice: Prisma.Decimal;
+            status: import("@prisma/client").$Enums.ProductStatus;
+            createdAt: Date;
+            updatedAt: Date;
+            deletedAt: Date | null;
+            imageUrl: string | null;
+            isFeatured: boolean;
+            isHmcCertified: boolean;
+            approvalStatus: import("@prisma/client").$Enums.ProductApprovalStatus;
+            categoryId: string | null;
+            draftData: Prisma.JsonValue | null;
+            specifications: Prisma.JsonValue | null;
+        })[];
+        total: number;
+    }>;
+    findOne(id: string): Promise<{
+        id: string;
+        category: import("@prisma/client").$Enums.ProductCategory;
+        name: string;
+        description: string | null;
+        basePrice: Prisma.Decimal;
+        status: import("@prisma/client").$Enums.ProductStatus;
+        createdAt: Date;
+        updatedAt: Date;
+        deletedAt: Date | null;
+        imageUrl: string | null;
+        isFeatured: boolean;
+        isHmcCertified: boolean;
+        approvalStatus: import("@prisma/client").$Enums.ProductApprovalStatus;
+        categoryId: string | null;
+        draftData: Prisma.JsonValue | null;
+        specifications: Prisma.JsonValue | null;
+    } | null>;
+    create(file: Express.Multer.File, body: any, req: any): Promise<{
+        id: string;
+        category: import("@prisma/client").$Enums.ProductCategory;
+        name: string;
+        description: string | null;
+        basePrice: Prisma.Decimal;
+        status: import("@prisma/client").$Enums.ProductStatus;
+        createdAt: Date;
+        updatedAt: Date;
+        deletedAt: Date | null;
+        imageUrl: string | null;
+        isFeatured: boolean;
+        isHmcCertified: boolean;
+        approvalStatus: import("@prisma/client").$Enums.ProductApprovalStatus;
+        categoryId: string | null;
+        draftData: Prisma.JsonValue | null;
+        specifications: Prisma.JsonValue | null;
+    }>;
+    update(id: string, file: Express.Multer.File, body: any, req: any): Promise<{
+        id: string;
+        category: import("@prisma/client").$Enums.ProductCategory;
+        name: string;
+        description: string | null;
+        basePrice: Prisma.Decimal;
+        status: import("@prisma/client").$Enums.ProductStatus;
+        createdAt: Date;
+        updatedAt: Date;
+        deletedAt: Date | null;
+        imageUrl: string | null;
+        isFeatured: boolean;
+        isHmcCertified: boolean;
+        approvalStatus: import("@prisma/client").$Enums.ProductApprovalStatus;
+        categoryId: string | null;
+        draftData: Prisma.JsonValue | null;
+        specifications: Prisma.JsonValue | null;
+    }>;
+    approve(id: string, req: any): Promise<{
+        id: string;
+        category: import("@prisma/client").$Enums.ProductCategory;
+        name: string;
+        description: string | null;
+        basePrice: Prisma.Decimal;
+        status: import("@prisma/client").$Enums.ProductStatus;
+        createdAt: Date;
+        updatedAt: Date;
+        deletedAt: Date | null;
+        imageUrl: string | null;
+        isFeatured: boolean;
+        isHmcCertified: boolean;
+        approvalStatus: import("@prisma/client").$Enums.ProductApprovalStatus;
+        categoryId: string | null;
+        draftData: Prisma.JsonValue | null;
+        specifications: Prisma.JsonValue | null;
+    }>;
+    reject(id: string, req: any): Promise<{
+        id: string;
+        category: import("@prisma/client").$Enums.ProductCategory;
+        name: string;
+        description: string | null;
+        basePrice: Prisma.Decimal;
+        status: import("@prisma/client").$Enums.ProductStatus;
+        createdAt: Date;
+        updatedAt: Date;
+        deletedAt: Date | null;
+        imageUrl: string | null;
+        isFeatured: boolean;
+        isHmcCertified: boolean;
+        approvalStatus: import("@prisma/client").$Enums.ProductApprovalStatus;
+        categoryId: string | null;
+        draftData: Prisma.JsonValue | null;
+        specifications: Prisma.JsonValue | null;
+    }>;
+    updateStock(id: string, quantity: number, lowStockThreshold: number, req: any): Promise<{
+        id: string;
+        productId: string;
+        quantity: Prisma.Decimal;
+        lowStockThreshold: Prisma.Decimal;
+        updatedAt: Date;
+        createdAt: Date;
+    }>;
+    remove(id: string, req: any): Promise<{
+        id: string;
+        category: import("@prisma/client").$Enums.ProductCategory;
+        name: string;
+        description: string | null;
+        basePrice: Prisma.Decimal;
+        status: import("@prisma/client").$Enums.ProductStatus;
+        createdAt: Date;
+        updatedAt: Date;
+        deletedAt: Date | null;
+        imageUrl: string | null;
+        isFeatured: boolean;
+        isHmcCertified: boolean;
+        approvalStatus: import("@prisma/client").$Enums.ProductApprovalStatus;
+        categoryId: string | null;
+        draftData: Prisma.JsonValue | null;
+        specifications: Prisma.JsonValue | null;
+    }>;
+}

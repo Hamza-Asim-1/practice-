@@ -1,0 +1,190 @@
+@import "tailwindcss";
+@import "./admin.css";
+
+@theme {
+  --color-bg-dark: #FFFFFF;
+  --color-bg-darker: #F8F9FA;
+  --color-accent-lime: #BACD38;
+  --color-accent-hover: #C5D844;
+  --color-accent-dark: #E9ECEF;
+  --color-text-cream: #1C1D1D;
+
+  --shadow-glass: 0 4px 30px rgba(0, 0, 0, 0.5);
+  --shadow-lime: 0 0 20px rgba(186, 205, 56, 0.4);
+
+  /* Keyframes */
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes slide-in-from-top {
+    from { transform: translateY(-4px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+  @keyframes zoom-in {
+    from { transform: scale(0.95); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+
+  /* Animations */
+  --animate-fade-in: fade-in 0.5s ease-out;
+  --animate-zoom-in: zoom-in 0.3s ease-out;
+  --animate-slide-in: slide-in-from-top 0.3s ease-out;
+}
+
+@utility animate-in {
+  animation-fill-mode: both;
+}
+
+@utility fade-in {
+  animation-name: fade-in;
+}
+
+@utility slide-in-from-top-1 {
+  animation-name: slide-in-from-top;
+}
+
+@utility zoom-in {
+  animation-name: zoom-in;
+}
+
+@utility zoom-in-95 {
+  --tw-zoom-in: 0.95;
+  animation-name: zoom-in;
+}
+
+@utility duration-200 {
+  animation-duration: 200ms;
+}
+
+@utility duration-300 {
+  animation-duration: 300ms;
+}
+
+@utility duration-500 {
+  animation-duration: 500ms;
+}
+
+:root {
+  --bg-dark: #FFFFFF;
+  --bg-darker: #F8F9FA;
+  --accent-lime: #BACD38;
+  --accent-hover: #C5D844;
+  --accent-dark: #E9ECEF;
+  --text-cream: #1C1D1D;
+  --glass-bg: rgba(255, 255, 255, 0.8);
+  --glass-border: rgba(0, 0, 0, 0.05);
+  --glass-blur: blur(20px);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background-color: var(--bg-dark);
+  color: var(--text-cream);
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  position: relative;
+}
+
+/* Global Marble Background Overlay */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  opacity: 0.15;
+  background-image: url('/assets/images/marble-bg.png');
+  background-size: 1000px;
+  background-repeat: repeat;
+  background-position: center;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+
+/* Restore heading sizes that Tailwind's Preflight resets */
+h1 { font-size: 2rem;    font-weight: 800; line-height: 1.2; }
+h2 { font-size: 1.5rem;  font-weight: 700; line-height: 1.3; }
+h3 { font-size: 1.25rem; font-weight: 600; line-height: 1.4; }
+h4 { font-size: 1rem;    font-weight: 600; line-height: 1.5; }
+h5 { font-size: 0.875rem; font-weight: 600; }
+h6 { font-size: 0.75rem;  font-weight: 600; }
+
+::selection {
+  background: var(--accent-lime);
+  color: #000;
+}
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #f1f1f1; }
+::-webkit-scrollbar-thumb { background: #ccc; border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: var(--accent-lime); }
+
+a {
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  outline: none;
+  font-family: inherit;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* === Custom Component Classes === */
+@layer components {
+  .teza-container {
+    max-width: 1400px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+
+  .lime-btn {
+    background-color: var(--accent-lime);
+    color: #000;
+    padding: 14px 28px;
+    font-size: 14px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    border-radius: 9999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    box-shadow: 0 4px 20px rgba(186, 205, 56, 0.15);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    border: none;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+
+  .lime-btn:hover {
+    background-color: var(--accent-hover);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(186, 205, 56, 0.4);
+  }
+
+  .lime-btn:active {
+    transform: scale(0.97);
+  }
+}
+
+@media (max-width: 768px) {
+  .teza-container {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}

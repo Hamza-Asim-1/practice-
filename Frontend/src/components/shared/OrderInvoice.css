@@ -1,0 +1,185 @@
+/* Hide invoice component entirely on screen */
+@media screen {
+    .print-only-invoice {
+        display: none !important;
+    }
+}
+
+/* Base print styling */
+@media print {
+
+    /* Hide the rest of the app */
+    body * {
+        visibility: hidden;
+    }
+
+    /* Bring the invoice to the front and make it visible */
+    .print-only-invoice,
+    .print-only-invoice * {
+        visibility: visible;
+    }
+
+    /* Position the invoice at the very top left of the printable page */
+    .print-only-invoice {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        margin: 0;
+        padding: 40px;
+        background: white;
+        color: black;
+        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        box-sizing: border-box;
+    }
+
+    /* Typography inside the invoice */
+    .invoice-header {
+        display: flex;
+        justify-content: space-between;
+        border-bottom: 2px solid #000;
+        padding-bottom: 20px;
+        margin-bottom: 30px;
+    }
+
+    .invoice-logo {
+        font-size: 42px;
+        font-weight: 800;
+        letter-spacing: -1px;
+        margin: 0;
+        line-height: 1;
+    }
+
+    .invoice-subtitle {
+        font-size: 14px;
+        color: #555;
+        margin-top: 5px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .invoice-meta h2 {
+        font-size: 24px;
+        margin: 0 0 10px 0;
+        text-align: right;
+    }
+
+    .invoice-meta p {
+        margin: 4px 0;
+        font-size: 12px;
+        text-align: right;
+    }
+
+    .invoice-addresses {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 40px;
+    }
+
+    .invoice-box h3 {
+        font-size: 14px;
+        border-bottom: 1px solid #ddd;
+        padding-bottom: 5px;
+        margin-bottom: 10px;
+        text-transform: uppercase;
+    }
+
+    .invoice-box p {
+        margin: 4px 0;
+        font-size: 13px;
+    }
+
+    .invoice-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 40px;
+    }
+
+    .invoice-table th {
+        background: #f4f4f4;
+        text-align: left;
+        padding: 12px;
+        font-size: 12px;
+        text-transform: uppercase;
+        border-bottom: 2px solid #000;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    .invoice-table td {
+        padding: 12px;
+        font-size: 13px;
+        border-bottom: 1px solid #ddd;
+        vertical-align: top;
+    }
+
+    .invoice-options span {
+        display: block;
+        font-size: 11px;
+        color: #555;
+    }
+
+    .invoice-summary {
+        display: flex;
+        justify-content: space-between;
+        border-top: 2px solid #000;
+        padding-top: 20px;
+    }
+
+    .invoice-notes {
+        width: 50%;
+    }
+
+    .invoice-notes h4 {
+        margin: 0 0 10px 0;
+        font-size: 14px;
+    }
+
+    .invoice-notes p {
+        font-size: 13px;
+        font-style: italic;
+    }
+
+    .invoice-totals {
+        width: 40%;
+    }
+
+    .totals-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 8px 0;
+        font-size: 14px;
+    }
+
+    .grand-total {
+        font-weight: bold;
+        font-size: 18px;
+        border-top: 1px solid #000;
+        padding-top: 12px;
+        margin-top: 4px;
+    }
+
+    .invoice-footer {
+        margin-top: 60px;
+        text-align: center;
+        font-size: 12px;
+        color: #888;
+        border-top: 1px solid #eee;
+        padding-top: 20px;
+    }
+
+    .invoice-special-notes td {
+        background: #fdfdfd;
+        padding: 5px 12px 15px 12px !important;
+        border-bottom: 2px solid #eee;
+    }
+
+    .special-notes-box {
+        background: #f9f9f9;
+        padding: 10px;
+        border-left: 3px solid #ccc;
+        font-size: 11px;
+        line-height: 1.4;
+        color: #333;
+    }
+}

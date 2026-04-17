@@ -1,0 +1,120 @@
+/* Premium Admin Dashboard Styling for Teza */
+
+.admin-page-header {
+  @apply flex flex-col md:flex-row justify-between items-start md:items-end mb-8 border-b border-black/5 pb-6 gap-6;
+}
+
+.admin-page-title {
+  @apply text-3xl font-black tracking-tight text-text-cream m-0;
+}
+
+.admin-stat-grid {
+  @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10;
+}
+
+.admin-card {
+  @apply bg-white border border-black/5 rounded-2xl p-6 shadow-sm relative overflow-hidden transition-all duration-300;
+}
+
+.admin-card:hover {
+  @apply border-black/10 bg-white shadow-xl;
+}
+
+.stat-card h4 {
+  @apply text-black/40 text-xs font-black uppercase tracking-[0.15em] mb-4;
+}
+
+.stat-value {
+  @apply text-[40px] font-black leading-none mb-2 tracking-tighter text-text-cream;
+}
+
+.stat-value.text-lime {
+  color: var(--color-accent-lime);
+}
+
+.stat-delta {
+  @apply text-xs font-semibold px-2.5 py-1 rounded-full inline-block bg-black/5 text-black/60 border border-black/5;
+}
+
+.stat-delta.positive {
+  @apply bg-[#c0d72d]/10 text-[#c0d72d] border-[#c0d72d]/20;
+}
+
+.dashboard-metrics {
+  @apply flex flex-col lg:flex-row gap-6 mb-10;
+}
+
+.admin-table {
+  @apply w-full text-left border-collapse;
+}
+
+.admin-table th {
+  @apply pb-4 text-[10px] font-black uppercase tracking-[0.1em] text-accent-lime/80 font-semibold border-b border-black/5 whitespace-nowrap;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.admin-table td {
+  @apply py-4 border-b border-black/5 text-sm text-black/60 font-medium align-middle;
+}
+
+.admin-table tbody tr {
+  @apply transition-colors duration-200 hover:bg-black/[0.02];
+}
+
+.admin-table tbody tr:last-child td {
+  @apply border-b-0;
+}
+
+.dashboard-action-btn {
+  @apply w-full mb-3 bg-white border border-black/10 transition-colors duration-300 hover:border-[#c0d72d] hover:bg-[#c0d72d]/5 text-text-cream py-4 px-6 rounded-xl flex items-center justify-between text-sm font-bold tracking-wide shadow-sm;
+}
+
+.status-badge {
+  @apply px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest inline-flex items-center;
+}
+
+.status-badge.beef { @apply bg-red-500/10 text-red-500 border border-red-500/20; }
+.status-badge.lamb { @apply bg-purple-500/10 text-purple-400 border border-purple-500/20; }
+.status-badge.poultry { @apply bg-yellow-500/10 text-yellow-500 border border-yellow-500/20; }
+.status-badge.veal { @apply bg-blue-500/10 text-blue-400 border border-blue-500/20; }
+
+.admin-inline-form {
+  @apply flex flex-col md:flex-row gap-4 items-center;
+}
+
+.admin-input {
+  @apply bg-white border border-black/10 rounded-xl px-4 py-3 text-sm text-text-cream flex-1 focus:border-[#c0d72d] focus:outline-none transition-colors w-full tracking-wide font-medium placeholder:text-black/20;
+}
+
+.admin-input:disabled {
+  @apply opacity-50 cursor-not-allowed bg-black/5;
+}
+
+.admin-submit-btn {
+  @apply font-bold px-6 py-3 shrink-0 whitespace-nowrap;
+}
+
+.admin-modal-overlay {
+  @apply fixed inset-0 z-50 bg-black/40 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto;
+}
+
+.admin-modal-content {
+  @apply w-full max-w-lg relative z-50 animate-in fade-in zoom-in-95 duration-200 bg-white rounded-3xl shadow-2xl;
+}
+
+.text-btn {
+  @apply bg-transparent text-black/40 font-bold text-sm transition-colors hover:text-black;
+}
+
+.text-btn:hover {
+  background: transparent;
+  box-shadow: none;
+  transform: none;
+}

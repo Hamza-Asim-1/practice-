@@ -1,0 +1,158 @@
+import { SuppliersService } from './suppliers.service';
+import { Prisma, SupplierStatus } from '@prisma/client';
+export declare class SuppliersController {
+    private readonly suppliersService;
+    constructor(suppliersService: SuppliersService);
+    findAll(req: any): Promise<{
+        id: string;
+        name: string;
+        contactName: string;
+        phone: string;
+        email: string;
+        hmcCertNumber: string | null;
+        status: import("@prisma/client").$Enums.SupplierStatus;
+        createdAt: Date;
+        updatedAt: Date;
+        deletedAt: Date | null;
+        address: string;
+        addressLine1: string | null;
+        addressLine2: string | null;
+        area: string | null;
+        city: string | null;
+        postcode: string | null;
+    }[]>;
+    getInventory(req: any): Promise<({
+        categoryObj: {
+            id: string;
+            name: string;
+            createdAt: Date;
+            updatedAt: Date;
+        } | null;
+        stock: {
+            id: string;
+            productId: string;
+            quantity: Prisma.Decimal;
+            lowStockThreshold: Prisma.Decimal;
+            updatedAt: Date;
+            createdAt: Date;
+        } | null;
+    } & {
+        id: string;
+        category: import("@prisma/client").$Enums.ProductCategory;
+        name: string;
+        description: string | null;
+        basePrice: Prisma.Decimal;
+        status: import("@prisma/client").$Enums.ProductStatus;
+        createdAt: Date;
+        updatedAt: Date;
+        deletedAt: Date | null;
+        imageUrl: string | null;
+        isFeatured: boolean;
+        isHmcCertified: boolean;
+        approvalStatus: import("@prisma/client").$Enums.ProductApprovalStatus;
+        categoryId: string | null;
+        draftData: Prisma.JsonValue | null;
+        specifications: Prisma.JsonValue | null;
+    })[]>;
+    getApplications(req: any): Promise<({
+        supplier: {
+            id: string;
+            name: string;
+            contactName: string;
+            phone: string;
+            email: string;
+            hmcCertNumber: string | null;
+            status: import("@prisma/client").$Enums.SupplierStatus;
+            createdAt: Date;
+            updatedAt: Date;
+            deletedAt: Date | null;
+            address: string;
+            addressLine1: string | null;
+            addressLine2: string | null;
+            area: string | null;
+            city: string | null;
+            postcode: string | null;
+        };
+    } & {
+        id: string;
+        supplierId: string;
+        notes: string | null;
+        decisionDate: Date | null;
+        decidedById: string | null;
+        createdAt: Date;
+        updatedAt: Date;
+        status: import("@prisma/client").$Enums.ApplicationStatus;
+    })[]>;
+    findOne(id: string, req: any): Promise<{
+        id: string;
+        name: string;
+        contactName: string;
+        phone: string;
+        email: string;
+        hmcCertNumber: string | null;
+        status: import("@prisma/client").$Enums.SupplierStatus;
+        createdAt: Date;
+        updatedAt: Date;
+        deletedAt: Date | null;
+        address: string;
+        addressLine1: string | null;
+        addressLine2: string | null;
+        area: string | null;
+        city: string | null;
+        postcode: string | null;
+    } | null>;
+    decideApplication(id: string, decision: 'APPROVED' | 'REJECTED', notes: string, req: any): Promise<{
+        id: string;
+        name: string;
+        contactName: string;
+        phone: string;
+        email: string;
+        hmcCertNumber: string | null;
+        status: import("@prisma/client").$Enums.SupplierStatus;
+        createdAt: Date;
+        updatedAt: Date;
+        deletedAt: Date | null;
+        address: string;
+        addressLine1: string | null;
+        addressLine2: string | null;
+        area: string | null;
+        city: string | null;
+        postcode: string | null;
+    }>;
+    create(createSupplierDto: Prisma.SupplierCreateInput, req: any): Promise<{
+        id: string;
+        name: string;
+        contactName: string;
+        phone: string;
+        email: string;
+        hmcCertNumber: string | null;
+        status: import("@prisma/client").$Enums.SupplierStatus;
+        createdAt: Date;
+        updatedAt: Date;
+        deletedAt: Date | null;
+        address: string;
+        addressLine1: string | null;
+        addressLine2: string | null;
+        area: string | null;
+        city: string | null;
+        postcode: string | null;
+    }>;
+    updateStatus(id: string, status: SupplierStatus, req: any): Promise<{
+        id: string;
+        name: string;
+        contactName: string;
+        phone: string;
+        email: string;
+        hmcCertNumber: string | null;
+        status: import("@prisma/client").$Enums.SupplierStatus;
+        createdAt: Date;
+        updatedAt: Date;
+        deletedAt: Date | null;
+        address: string;
+        addressLine1: string | null;
+        addressLine2: string | null;
+        area: string | null;
+        city: string | null;
+        postcode: string | null;
+    }>;
+}

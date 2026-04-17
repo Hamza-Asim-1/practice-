@@ -1,0 +1,72 @@
+import { PrismaService } from '../prisma/prisma.service';
+import { Prisma, Order, OrderStatus } from '@prisma/client';
+import { StripeService } from '../stripe/stripe.service';
+import { TwilioService } from '../twilio/twilio.service';
+import { TookanService } from '../tookan/tookan.service';
+import { PostcodesService } from '../postcodes/postcodes.service';
+import { Queue } from 'bullmq';
+export declare class OrdersService {
+    private prisma;
+    private stripe;
+    private twilio;
+    private tookan;
+    private postcodesService;
+    private notificationsQueue;
+    private deliveriesQueue;
+    constructor(prisma: PrismaService, stripe: StripeService, twilio: TwilioService, tookan: TookanService, postcodesService: PostcodesService, notificationsQueue: Queue, deliveriesQueue: Queue);
+    create(data: Prisma.OrderCreateInput, customerId: string): Promise<Order>;
+    confirmOrder(orderId: string): Promise<Order>;
+    findAll(): Promise<Order[]>;
+    findMyOrders(customerId: string): Promise<Order[]>;
+    findSupplierOrders(supplierId: string): Promise<Order[]>;
+    syncPaymentStatus(orderId: string): Promise<Order>;
+    findOne(id: string): Promise<any>;
+    updateStatus(id: string, status: OrderStatus): Promise<Order>;
+    flagIssue(id: string): Promise<Order>;
+    linkOrderToCustomer(orderId: string, customerId: string): Promise<void>;
+    getSupplierSuggestions(orderId: string): Promise<{
+        id: string;
+        name: string;
+        address: string;
+        outcode: string | null;
+        score: number;
+    }[]>;
+    reassignSupplier(orderId: string, supplierId: string): Promise<{
+        supplier: {
+            id: string;
+            name: string;
+            contactName: string;
+            phone: string;
+            email: string;
+            hmcCertNumber: string | null;
+            status: import("@prisma/client").$Enums.SupplierStatus;
+            createdAt: Date;
+            updatedAt: Date;
+            deletedAt: Date | null;
+            address: string;
+            addressLine1: string | null;
+            addressLine2: string | null;
+            area: string | null;
+            city: string | null;
+            postcode: string | null;
+        } | null;
+    } & {
+        id: string;
+        orderNumber: string;
+        customerId: string | null;
+        guestEmail: string | null;
+        guestPhone: string | null;
+        addressId: string;
+        supplierId: string | null;
+        status: import("@prisma/client").$Enums.OrderStatus;
+        subtotal: Prisma.Decimal;
+        deliveryFee: Prisma.Decimal;
+        totalAmount: Prisma.Decimal;
+        complexityFlag: boolean;
+        tookanTaskId: string | null;
+        trackingUrl: string | null;
+        createdAt: Date;
+        updatedAt: Date;
+        notes: string | null;
+    }>;
+}

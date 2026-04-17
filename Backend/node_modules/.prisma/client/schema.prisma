@@ -1,0 +1,306 @@
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "windows", "rhel-openssl-1.0.x"]
+  engineType    = "binary"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model User {
+  id                  String                @id @default(uuid())
+  email               String                @unique
+  passwordHash        String
+  role                Role
+  supplierId          String?
+  createdAt           DateTime              @default(now())
+  updatedAt           DateTime              @updatedAt
+  deletedAt           DateTime?
+  customer            Customer?
+  processedRefunds    Refund[]
+  decidedApplications SupplierApplication[]
+  supplier            Supplier?             @relation(fields: [supplierId], references: [id])
+}
+
+model Customer {
+  id        String    @id @default(uuid())
+  userId    String?   @unique
+  firstName String
+  lastName  String
+  phone     String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+  addresses Address[]
+  user      User?     @relation(fields: [userId], references: [id])
+  orders    Order[]
+}
+
+model Address {
+  id                   String    @id @default(uuid())
+  customerId           String?
+  line1                String
+  line2                String?
+  deliveryInstructions String?
+  createdAt            DateTime  @default(now())
+  updatedAt            DateTime  @updatedAt
+  postcodeCode         String
+  customer             Customer? @relation(fields: [customerId], references: [id])
+  postcode             Postcode  @relation(fields: [postcodeCode], references: [code])
+  orders               Order[]
+}
+
+model Supplier {
+  id            String               @id @default(uuid())
+  name          String
+  contactName   String
+  phone         String
+  email         String
+  hmcCertNumber String?              @unique
+  status        SupplierStatus       @default(PENDING)
+  createdAt     DateTime             @default(now())
+  updatedAt     DateTime             @updatedAt
+  deletedAt     DateTime?
+  address       String               @default("Not Provided")
+  addressLine1  String?
+  addressLine2  String?
+  area          String?
+  city          String?
+  postcode      String?
+  orders        Order[]
+  application   SupplierApplication?
+  coverage      SupplierPostcode[]
+  users         User[]
+}
+
+model SupplierApplication {
+  id           String            @id @default(uuid())
+  supplierId   String            @unique
+  notes        String?
+  decisionDate DateTime?
+  decidedById  String?
+  createdAt    DateTime          @default(now())
+  updatedAt    DateTime          @updatedAt
+  status       ApplicationStatus @default(PENDING)
+  decidedBy    User?             @relation(fields: [decidedById], references: [id])
+  supplier     Supplier          @relation(fields: [supplierId], references: [id])
+}
+
+model Postcode {
+  code                String             @id
+  active              Boolean            @default(false)
+  deliveryRadiusMiles Decimal?
+  deliveryFee         Decimal            @default(3.99)
+  createdAt           DateTime           @default(now())
+  updatedAt           DateTime           @updatedAt
+  area                String?
+  city                String?
+  minimumOrder        Decimal            @default(30.00)
+  addresses           Address[]
+  suppliers           SupplierPostcode[]
+}
+
+model SupplierPostcode {
+  supplierId String
+  postcodeId String
+  createdAt  DateTime @default(now())
+  postcode   Postcode @relation(fields: [postcodeId], references: [code])
+  supplier   Supplier @relation(fields: [supplierId], references: [id])
+
+  @@id([supplierId, postcodeId])
+}
+
+model Category {
+  id        String    @id @default(uuid())
+  name      String    @unique
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  products  Product[]
+}
+
+model Product {
+  id             String                @id @default(uuid())
+  category       ProductCategory
+  name           String
+  description    String?
+  basePrice      Decimal
+  status         ProductStatus         @default(LIVE)
+  createdAt      DateTime              @default(now())
+  updatedAt      DateTime              @updatedAt
+  deletedAt      DateTime?
+  imageUrl       String?
+  isFeatured     Boolean               @default(false)
+  isHmcCertified Boolean               @default(true)
+  approvalStatus ProductApprovalStatus @default(PENDING)
+  categoryId     String?
+  draftData      Json?
+  specifications Json?
+  orderItems     OrderItem[]
+  categoryObj    Category?             @relation(fields: [categoryId], references: [id])
+  stock          ProductStock?
+}
+
+model ProductStock {
+  id                String   @id @default(uuid())
+  productId         String   @unique
+  quantity          Decimal  @default(0)
+  lowStockThreshold Decimal  @default(5)
+  updatedAt         DateTime @updatedAt
+  createdAt         DateTime @default(now())
+  product           Product  @relation(fields: [productId], references: [id])
+}
+
+model Order {
+  id             String      @id @default(uuid())
+  orderNumber    String      @unique
+  customerId     String?
+  guestEmail     String?
+  guestPhone     String?
+  addressId      String
+  supplierId     String? // Made optional for Admin manual assignment
+  status         OrderStatus @default(PENDING_PAYMENT)
+  subtotal       Decimal
+  deliveryFee    Decimal
+  totalAmount    Decimal
+  complexityFlag Boolean     @default(false)
+  tookanTaskId   String?
+  trackingUrl    String?
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+  notes          String?
+  address        Address     @relation(fields: [addressId], references: [id])
+  customer       Customer?   @relation(fields: [customerId], references: [id])
+  supplier       Supplier?   @relation(fields: [supplierId], references: [id])
+  items          OrderItem[]
+  payment        Payment?
+}
+
+model OrderItem {
+  id             String          @id @default(uuid())
+  orderId        String
+  productId      String
+  quantity       Int
+  priceAtTime    Decimal
+  weight         String?
+  cutType        String?
+  fatPreference  String?
+  bonePreference String?
+  packingStyle   String?
+  specialNotes   String?
+  texture        Texture?
+  grind          Grind?
+  mincedFatLevel MincedFatLevel?
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  order          Order           @relation(fields: [orderId], references: [id])
+  product        Product         @relation(fields: [productId], references: [id])
+}
+
+model Payment {
+  id              String        @id @default(uuid())
+  orderId         String        @unique
+  stripePaymentId String?       @unique
+  amount          Decimal
+  status          PaymentStatus @default(PENDING)
+  method          String?
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  order           Order         @relation(fields: [orderId], references: [id])
+  refunds         Refund[]
+}
+
+model Refund {
+  id             String       @id @default(uuid())
+  paymentId      String
+  stripeRefundId String?      @unique
+  amount         Decimal
+  reason         String?
+  status         RefundStatus @default(PENDING)
+  processedById  String?
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  payment        Payment      @relation(fields: [paymentId], references: [id])
+  processedBy    User?        @relation(fields: [processedById], references: [id])
+}
+
+enum Role {
+  CUSTOMER
+  SUPPLIER_ADMIN
+  OPS_ADMIN
+  SUPER_ADMIN
+}
+
+enum SupplierStatus {
+  ACTIVE
+  SUSPENDED
+  PENDING
+}
+
+enum ApplicationStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+enum ProductApprovalStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+enum ProductCategory {
+  BEEF
+  LAMB
+  POULTRY
+  GOAT
+}
+
+enum ProductStatus {
+  LIVE
+  HIDDEN
+}
+
+enum OrderStatus {
+  PENDING_PAYMENT
+  CONFIRMED
+  IN_PREPARATION
+  READY_FOR_PICKUP
+  OUT_FOR_DELIVERY
+  DELIVERED
+  ISSUE_FLAGGED
+  CANCELLED
+  REFUNDED
+}
+
+enum PaymentStatus {
+  PENDING
+  SUCCEEDED
+  FAILED
+  REFUNDED
+}
+
+enum RefundStatus {
+  PENDING
+  SUCCEEDED
+  FAILED
+}
+
+enum Texture {
+  Fine
+  Medium
+  Coarse
+}
+
+enum Grind {
+  Once
+  Twice
+}
+
+enum MincedFatLevel {
+  Standard
+  Lean
+  Extra_Lean
+}
